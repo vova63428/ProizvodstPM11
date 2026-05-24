@@ -1,0 +1,685 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище MunicipalRentDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="audit_log">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_employee" Type="int" />
+          <Property Name="action_type" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="table_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="record_id" Type="int" Nullable="false" />
+          <Property Name="action_datetime" Type="datetime" />
+          <Property Name="old_value" Type="nvarchar(max)" />
+          <Property Name="new_value" Type="nvarchar(max)" />
+          <Property Name="ip_address" Type="nvarchar" MaxLength="45" />
+          <Property Name="id_user" Type="int" />
+        </EntityType>
+        <EntityType Name="contracts">
+          <Key>
+            <PropertyRef Name="id_contract" />
+          </Key>
+          <Property Name="id_contract" Type="int" Nullable="false" />
+          <Property Name="contract_number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_object" Type="int" Nullable="false" />
+          <Property Name="id_tenant" Type="int" Nullable="false" />
+          <Property Name="id_responsible_employee" Type="int" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="monthly_rate" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="payment_day" Type="int" />
+          <Property Name="contract_status" Type="nvarchar" MaxLength="30" />
+          <Property Name="notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="departments">
+          <Key>
+            <PropertyRef Name="id_department" />
+          </Key>
+          <Property Name="id_department" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="department_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employees">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_position" Type="int" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="hire_date" Type="date" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="role" Type="nvarchar" MaxLength="30" />
+          <Property Name="department" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="objects">
+          <Key>
+            <PropertyRef Name="id_object" />
+          </Key>
+          <Property Name="id_object" Type="int" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="cadastral_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="total_area" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="purpose" Type="nvarchar" MaxLength="100" />
+          <Property Name="condition" Type="nvarchar" MaxLength="50" />
+          <Property Name="is_rented_now" Type="bit" />
+        </EntityType>
+        <EntityType Name="payments">
+          <Key>
+            <PropertyRef Name="id_payment" />
+          </Key>
+          <Property Name="id_payment" Type="int" Nullable="false" />
+          <Property Name="id_contract" Type="int" Nullable="false" />
+          <Property Name="payment_date" Type="date" Nullable="false" />
+          <Property Name="period_month" Type="date" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="payment_type" Type="nvarchar" MaxLength="30" />
+          <Property Name="is_penalty" Type="bit" />
+          <Property Name="id_employee_who_accepted" Type="int" Nullable="false" />
+          <Property Name="receipt_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_user_who_accepted" Type="int" />
+        </EntityType>
+        <EntityType Name="positions">
+          <Key>
+            <PropertyRef Name="id_position" />
+          </Key>
+          <Property Name="id_position" Type="int" Nullable="false" />
+          <Property Name="position_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="salary_grade" Type="nvarchar" MaxLength="50" />
+          <Property Name="access_level" Type="int" />
+          <Property Name="base_salary" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="tenants">
+          <Key>
+            <PropertyRef Name="id_tenant" />
+          </Key>
+          <Property Name="id_tenant" Type="int" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="20" />
+          <Property Name="inn" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="ogrn" Type="nvarchar" MaxLength="15" />
+          <Property Name="short_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="200" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="legal_address" Type="nvarchar" MaxLength="200" />
+          <Property Name="registration_date" Type="date" />
+          <Property Name="id_user" Type="int" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="150" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="role" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="is_blocked" Type="bit" />
+          <Property Name="last_login" Type="datetime" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__contracts__id_ob__4BAC3F29">
+          <End Role="objects" Type="Self.objects" Multiplicity="1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects">
+              <PropertyRef Name="id_object" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="id_object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__contracts__id_re__4D94879B">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="id_responsible_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__employees__id_po__3E52440B">
+          <End Role="positions" Type="Self.positions" Multiplicity="0..1" />
+          <End Role="employees" Type="Self.employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="positions">
+              <PropertyRef Name="id_position" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="id_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payments__id_con__52593CB8">
+          <End Role="contracts" Type="Self.contracts" Multiplicity="1" />
+          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contracts">
+              <PropertyRef Name="id_contract" />
+            </Principal>
+            <Dependent Role="payments">
+              <PropertyRef Name="id_contract" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payments__id_emp__534D60F1">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="payments">
+              <PropertyRef Name="id_employee_who_accepted" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_audit_log_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="audit_log" Type="Self.audit_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="audit_log">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employees_departments">
+          <End Role="departments" Type="Self.departments" Multiplicity="1" />
+          <End Role="employees" Type="Self.employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departments">
+              <PropertyRef Name="id_department" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MunicipalRentDBModelContainer">
+          <EntitySet Name="audit_log" EntityType="Self.audit_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contracts" EntityType="Self.contracts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departments" EntityType="Self.departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="objects" EntityType="Self.objects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payments" EntityType="Self.payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="positions" EntityType="Self.positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tenants" EntityType="Self.tenants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__contracts__id_ob__4BAC3F29" Association="Self.FK__contracts__id_ob__4BAC3F29">
+            <End Role="objects" EntitySet="objects" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__contracts__id_re__4D94879B" Association="Self.FK__contracts__id_re__4D94879B">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__employees__id_po__3E52440B" Association="Self.FK__employees__id_po__3E52440B">
+            <End Role="positions" EntitySet="positions" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payments__id_con__52593CB8" Association="Self.FK__payments__id_con__52593CB8">
+            <End Role="contracts" EntitySet="contracts" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payments__id_emp__534D60F1" Association="Self.FK__payments__id_emp__534D60F1">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_audit_log_users" Association="Self.FK_audit_log_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="audit_log" EntitySet="audit_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employees_departments" Association="Self.FK_employees_departments">
+            <End Role="departments" EntitySet="departments" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MunicipalRentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="audit_log">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_employee" Type="Int32" />
+          <Property Name="action_type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="table_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="record_id" Type="Int32" Nullable="false" />
+          <Property Name="action_datetime" Type="DateTime" Precision="3" />
+          <Property Name="old_value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="new_value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="id_user" Type="Int32" />
+          <NavigationProperty Name="users" Relationship="Self.FK_audit_log_users" FromRole="audit_log" ToRole="users" />
+        </EntityType>
+        <EntityType Name="contracts">
+          <Key>
+            <PropertyRef Name="id_contract" />
+          </Key>
+          <Property Name="id_contract" Type="Int32" Nullable="false" />
+          <Property Name="contract_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_object" Type="Int32" Nullable="false" />
+          <Property Name="id_tenant" Type="Int32" Nullable="false" />
+          <Property Name="id_responsible_employee" Type="Int32" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="monthly_rate" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="payment_day" Type="Int32" />
+          <Property Name="contract_status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="objects" Relationship="Self.FK__contracts__id_ob__4BAC3F29" FromRole="contracts" ToRole="objects" />
+          <NavigationProperty Name="employees" Relationship="Self.FK__contracts__id_re__4D94879B" FromRole="contracts" ToRole="employees" />
+          <NavigationProperty Name="payments" Relationship="Self.FK__payments__id_con__52593CB8" FromRole="contracts" ToRole="payments" />
+        </EntityType>
+        <EntityType Name="departments">
+          <Key>
+            <PropertyRef Name="id_department" />
+          </Key>
+          <Property Name="id_department" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="department_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="employees" Relationship="MunicipalRentDBModel.FK_employees_departments" FromRole="departments" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="employees">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_position" Type="Int32" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="hire_date" Type="DateTime" Precision="0" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="department" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="contracts" Relationship="Self.FK__contracts__id_re__4D94879B" FromRole="employees" ToRole="contracts" />
+          <NavigationProperty Name="positions" Relationship="Self.FK__employees__id_po__3E52440B" FromRole="employees" ToRole="positions" />
+          <NavigationProperty Name="payments" Relationship="Self.FK__payments__id_emp__534D60F1" FromRole="employees" ToRole="payments" />
+          <NavigationProperty Name="departments" Relationship="MunicipalRentDBModel.FK_employees_departments" FromRole="employees" ToRole="departments" />
+        </EntityType>
+        <EntityType Name="objects">
+          <Key>
+            <PropertyRef Name="id_object" />
+          </Key>
+          <Property Name="id_object" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cadastral_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="total_area" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="purpose" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="condition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="is_rented_now" Type="Boolean" />
+          <NavigationProperty Name="contracts" Relationship="Self.FK__contracts__id_ob__4BAC3F29" FromRole="objects" ToRole="contracts" />
+        </EntityType>
+        <EntityType Name="payments">
+          <Key>
+            <PropertyRef Name="id_payment" />
+          </Key>
+          <Property Name="id_payment" Type="Int32" Nullable="false" />
+          <Property Name="id_contract" Type="Int32" Nullable="false" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="period_month" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="payment_type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="is_penalty" Type="Boolean" />
+          <Property Name="id_employee_who_accepted" Type="Int32" Nullable="false" />
+          <Property Name="receipt_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_user_who_accepted" Type="Int32" />
+          <NavigationProperty Name="contracts" Relationship="Self.FK__payments__id_con__52593CB8" FromRole="payments" ToRole="contracts" />
+          <NavigationProperty Name="employees" Relationship="Self.FK__payments__id_emp__534D60F1" FromRole="payments" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="positions">
+          <Key>
+            <PropertyRef Name="id_position" />
+          </Key>
+          <Property Name="id_position" Type="Int32" Nullable="false" />
+          <Property Name="position_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary_grade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="access_level" Type="Int32" />
+          <Property Name="base_salary" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="employees" Relationship="Self.FK__employees__id_po__3E52440B" FromRole="positions" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="tenants">
+          <Key>
+            <PropertyRef Name="id_tenant" />
+          </Key>
+          <Property Name="id_tenant" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="inn" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrn" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="short_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="legal_address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="registration_date" Type="DateTime" Precision="0" />
+          <Property Name="id_user" Type="Int32" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_blocked" Type="Boolean" />
+          <Property Name="last_login" Type="DateTime" Precision="3" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="audit_log" Relationship="Self.FK_audit_log_users" FromRole="users" ToRole="audit_log" />
+        </EntityType>
+        <Association Name="FK_audit_log_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="audit_log" Type="Self.audit_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="audit_log">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__contracts__id_ob__4BAC3F29">
+          <End Role="objects" Type="Self.objects" Multiplicity="1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects">
+              <PropertyRef Name="id_object" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="id_object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__contracts__id_re__4D94879B">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="id_responsible_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payments__id_con__52593CB8">
+          <End Role="contracts" Type="Self.contracts" Multiplicity="1" />
+          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contracts">
+              <PropertyRef Name="id_contract" />
+            </Principal>
+            <Dependent Role="payments">
+              <PropertyRef Name="id_contract" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__employees__id_po__3E52440B">
+          <End Role="positions" Type="Self.positions" Multiplicity="0..1" />
+          <End Role="employees" Type="Self.employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="positions">
+              <PropertyRef Name="id_position" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="id_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payments__id_emp__534D60F1">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="payments">
+              <PropertyRef Name="id_employee_who_accepted" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MunicipalRentDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="audit_log" EntityType="Self.audit_log" />
+          <EntitySet Name="contracts" EntityType="Self.contracts" />
+          <EntitySet Name="departments" EntityType="Self.departments" />
+          <EntitySet Name="employees" EntityType="Self.employees" />
+          <EntitySet Name="objects" EntityType="Self.objects" />
+          <EntitySet Name="payments" EntityType="Self.payments" />
+          <EntitySet Name="positions" EntityType="Self.positions" />
+          <EntitySet Name="tenants" EntityType="Self.tenants" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK_audit_log_users" Association="Self.FK_audit_log_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="audit_log" EntitySet="audit_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__contracts__id_ob__4BAC3F29" Association="Self.FK__contracts__id_ob__4BAC3F29">
+            <End Role="objects" EntitySet="objects" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__contracts__id_re__4D94879B" Association="Self.FK__contracts__id_re__4D94879B">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payments__id_con__52593CB8" Association="Self.FK__payments__id_con__52593CB8">
+            <End Role="contracts" EntitySet="contracts" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__employees__id_po__3E52440B" Association="Self.FK__employees__id_po__3E52440B">
+            <End Role="positions" EntitySet="positions" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payments__id_emp__534D60F1" Association="Self.FK__payments__id_emp__534D60F1">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employees_departments" Association="MunicipalRentDBModel.FK_employees_departments">
+            <End Role="departments" EntitySet="departments" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_employees_departments">
+          <End Type="MunicipalRentDBModel.departments" Role="departments" Multiplicity="1" />
+          <End Type="MunicipalRentDBModel.employees" Role="employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departments">
+              <PropertyRef Name="id_department" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MunicipalRentDBModelContainer" CdmEntityContainer="MunicipalRentDBEntities2">
+          <EntitySetMapping Name="audit_log">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.audit_log">
+              <MappingFragment StoreEntitySet="audit_log">
+                <ScalarProperty Name="id_log" ColumnName="id_log" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="action_type" ColumnName="action_type" />
+                <ScalarProperty Name="table_name" ColumnName="table_name" />
+                <ScalarProperty Name="record_id" ColumnName="record_id" />
+                <ScalarProperty Name="action_datetime" ColumnName="action_datetime" />
+                <ScalarProperty Name="old_value" ColumnName="old_value" />
+                <ScalarProperty Name="new_value" ColumnName="new_value" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contracts">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.contracts">
+              <MappingFragment StoreEntitySet="contracts">
+                <ScalarProperty Name="id_contract" ColumnName="id_contract" />
+                <ScalarProperty Name="contract_number" ColumnName="contract_number" />
+                <ScalarProperty Name="id_object" ColumnName="id_object" />
+                <ScalarProperty Name="id_tenant" ColumnName="id_tenant" />
+                <ScalarProperty Name="id_responsible_employee" ColumnName="id_responsible_employee" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="monthly_rate" ColumnName="monthly_rate" />
+                <ScalarProperty Name="payment_day" ColumnName="payment_day" />
+                <ScalarProperty Name="contract_status" ColumnName="contract_status" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.departments">
+              <MappingFragment StoreEntitySet="departments">
+                <ScalarProperty Name="id_department" ColumnName="id_department" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.employees">
+              <MappingFragment StoreEntitySet="employees">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="id_position" ColumnName="id_position" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="hire_date" ColumnName="hire_date" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="department" ColumnName="department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="objects">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.objects">
+              <MappingFragment StoreEntitySet="objects">
+                <ScalarProperty Name="id_object" ColumnName="id_object" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="cadastral_number" ColumnName="cadastral_number" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="total_area" ColumnName="total_area" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="condition" ColumnName="condition" />
+                <ScalarProperty Name="is_rented_now" ColumnName="is_rented_now" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payments">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.payments">
+              <MappingFragment StoreEntitySet="payments">
+                <ScalarProperty Name="id_payment" ColumnName="id_payment" />
+                <ScalarProperty Name="id_contract" ColumnName="id_contract" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="period_month" ColumnName="period_month" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_type" ColumnName="payment_type" />
+                <ScalarProperty Name="is_penalty" ColumnName="is_penalty" />
+                <ScalarProperty Name="id_employee_who_accepted" ColumnName="id_employee_who_accepted" />
+                <ScalarProperty Name="receipt_number" ColumnName="receipt_number" />
+                <ScalarProperty Name="id_user_who_accepted" ColumnName="id_user_who_accepted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="positions">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.positions">
+              <MappingFragment StoreEntitySet="positions">
+                <ScalarProperty Name="id_position" ColumnName="id_position" />
+                <ScalarProperty Name="position_name" ColumnName="position_name" />
+                <ScalarProperty Name="salary_grade" ColumnName="salary_grade" />
+                <ScalarProperty Name="access_level" ColumnName="access_level" />
+                <ScalarProperty Name="base_salary" ColumnName="base_salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tenants">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.tenants">
+              <MappingFragment StoreEntitySet="tenants">
+                <ScalarProperty Name="id_tenant" ColumnName="id_tenant" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="inn" ColumnName="inn" />
+                <ScalarProperty Name="ogrn" ColumnName="ogrn" />
+                <ScalarProperty Name="short_name" ColumnName="short_name" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="legal_address" ColumnName="legal_address" />
+                <ScalarProperty Name="registration_date" ColumnName="registration_date" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="MunicipalRentDBModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="is_blocked" ColumnName="is_blocked" />
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
