@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="010cc993f5034fe7ba044927bb6f228e" Name="Diagram1">
+        <EntityTypeShape EntityType="MunicipalRentDBModel.audit_log" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.contracts" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.departments" Width="1.5" PointX="9.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.employees" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.objects" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.payments" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.positions" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.tenants" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MunicipalRentDBModel.users" Width="1.5" PointX="5.75" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK_audit_log_users" ManuallyRouted="false" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK__contracts__id_ob__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK__contracts__id_re__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK__payments__id_con__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK__employees__id_po__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK__payments__id_emp__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="MunicipalRentDBModel.FK_employees_departments" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
